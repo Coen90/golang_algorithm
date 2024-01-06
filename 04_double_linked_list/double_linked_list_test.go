@@ -1,8 +1,9 @@
 package double_linked_list
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestPushBack(t *testing.T) {
@@ -67,4 +68,12 @@ func TestPushBack(t *testing.T) {
 
 	l.InsertBefore(l.Front(), 1000)
 	assert.Equal(t, 1000, l.root.Value)
+	assert.Equal(t, 1000, l.Front().Value)
+
+	n := l.PopFront()
+	assert.Equal(t, 1000, n.Value)
+	assert.Equal(t, 100, l.Front().Value)
+
+	l.Remove(l.GetAt(0))
+	assert.Equal(t, 5, l.Front().Value)
 }

@@ -122,3 +122,60 @@ func (l *LinkedList[T]) InsertBefore(node *Node[T], val T) {
 	node.prev = n
 	l.count++
 }
+
+func (l *LinkedList[T]) PopFront() *Node[T] {
+	if l.root == nil {
+		return nil
+	}
+	n := l.root
+	l.root = n.next
+	if l.root != nil {
+		l.root.prev = nil
+	} else {
+		l.tail = nil
+	}
+	n.next = nil
+	l.count--
+	return n
+}
+
+func (l *LinkedList[T]) PopBack() *Node[T] {
+	if l.tail == nil {
+		return nil
+	}
+	n := l.tail
+	l.tail = n.prev
+	if l.tail != nil {
+		l.tail.next = nil
+	} else {
+		l.root = nil
+	}
+	n.prev = nil
+	l.count--
+	return n
+}
+
+func (l *LinkedList[T]) Remove(node *Node[T]) {
+	if node == l.root {
+		l.PopFront()
+		return
+	} else if node == l.tail {
+		l.PopBack()
+		return
+	}
+	if !l.IsExists(node) {
+		return
+	}
+	prev := node.prev
+	next := node.next
+	if prev != nil {
+		prev.next = next
+	}
+	if next != nil {
+		next.prev = prev
+	}
+
+	node.prev = nil
+	node.next = nil
+	l.count--
+}
