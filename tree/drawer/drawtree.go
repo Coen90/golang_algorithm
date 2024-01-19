@@ -1,9 +1,9 @@
 package drawer
 
 import (
-	"datastructure/tree/nodeinterface"
 	"fmt"
 	"image/color"
+	"tucker_algorithm/tree/nodeinterface"
 
 	"gonum.org/v1/plot"
 	"gonum.org/v1/plot/plotter"

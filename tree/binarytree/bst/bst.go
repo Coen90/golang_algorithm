@@ -1,8 +1,6 @@
 package bst
 
-import (
-	"datastructure/tree/nodeinterface"
-)
+import "tucker_algorithm/tree/nodeinterface"
 
 type Lesser interface {
 	Less(other Lesser) bool

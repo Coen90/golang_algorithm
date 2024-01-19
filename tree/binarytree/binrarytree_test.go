@@ -1,8 +1,8 @@
 package binarytree
 
 import (
-	"datastructure/tree/drawer"
 	"testing"
+	"tucker_algorithm/tree/drawer"
 
 	"github.com/stretchr/testify/assert"
 )

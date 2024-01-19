@@ -1,9 +1,9 @@
 package bst
 
 import (
-	"datastructure/tree/drawer"
 	"fmt"
 	"testing"
+	"tucker_algorithm/tree/drawer"
 
 	"github.com/stretchr/testify/assert"
 )

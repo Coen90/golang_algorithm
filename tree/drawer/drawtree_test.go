@@ -1,8 +1,8 @@
 package drawer
 
 import (
-	"datastructure/tree"
 	"testing"
+	"tucker_algorithm/tree"
 
 	"github.com/stretchr/testify/assert"
 )

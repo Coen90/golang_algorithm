@@ -1,7 +1,7 @@
 package avl
 
 import (
-	"datastructure/tree/nodeinterface"
+	"tucker_algorithm/tree/nodeinterface"
 
 	"golang.org/x/exp/constraints"
 )
