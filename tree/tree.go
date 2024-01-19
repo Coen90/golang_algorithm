@@ -1,6 +1,6 @@
 package tree
 
-import "datastructure/tree/nodeinterface"
+import "tucker_algorithm/tree/nodeinterface"
 
 type TreeNode[T any] struct {
 	Value T
