@@ -29,20 +29,6 @@ func (t *TreeNode[T]) Add(val T) *TreeNode[T] {
 	return n
 }
 
-func (t *TreeNode[T]) DFS(fn func(val T)) {
-	stack := []*TreeNode[T]{}
-	stack = append(stack, t)
-
-	for len(stack) > 0 {
-		last := stack[len(stack)-1]
-		stack = stack[:len(stack)-1]
-
-		fn(last.Value)
-
-		stack = append(stack, last.Childs...)
-	}
-}
-
 func (t *TreeNode[T]) Preorder(fn func(val T)) {
 	if t == nil {
 		return
@@ -77,5 +63,19 @@ func (t *TreeNode[T]) BFS(fn func(val T)) {
 		fn(front.Value)
 
 		queue = append(queue, front.Childs...)
+	}
+}
+
+func (t *TreeNode[T]) DFS(fn func(val T)) {
+	stack := []*TreeNode[T]{}
+	stack = append(stack, t)
+
+	for len(stack) > 0 {
+		last := stack[len(stack)-1]
+		stack = stack[:len(stack)-1]
+
+		fn(last.Value)
+
+		stack = append(stack, last.Childs...)
 	}
 }
