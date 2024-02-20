@@ -12,7 +12,7 @@ import (
 
 func main() {
 	ctx := context.Background()
-	os.Setenv("OPENAI_API_KEY", "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")
+	os.Setenv("OPENAI_API_KEY", "api-key")
 	llm, err := openai.New()
 	if err != nil {
 		log.Fatal(err)
@@ -22,5 +22,14 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	completion2, err := llm.Call(ctx, "The first man to walk on the moon",
+		llms.WithTemperature(0.8),
+		llms.WithStopWords([]string{"Armstrong"}),
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	fmt.Println(completion)
+	fmt.Println(completion2)
 }
