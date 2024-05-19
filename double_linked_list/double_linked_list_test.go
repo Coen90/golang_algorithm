@@ -1,6 +1,7 @@
 package double_linked_list
 
 import (
+	"log"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -76,4 +77,30 @@ func TestPushBack(t *testing.T) {
 
 	l.Remove(l.GetAt(0))
 	assert.Equal(t, 5, l.Front().Value)
+}
+
+type Value struct {
+	V string
+}
+
+func Test_ArrayPointer(t *testing.T) {
+	vv := []Value{
+		{V: "1"},
+		{V: "2"},
+		{V: "3"},
+	}
+
+	var v1 = []Value{}
+	var v2 = []*Value{}
+
+	for _, v := range vv {
+		v1 = append(v1, v)
+		v2 = append(v2, &v)
+	}
+
+	log.Println(v1)
+	log.Println("-----------------")
+	for i := 0; i < len(v2); i++ {
+		log.Println(*v2[i])
+	}
 }
