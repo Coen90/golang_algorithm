@@ -1,6 +1,6 @@
 module tucker_algorithm
 
-go 1.21.4
+go 1.22.0
 
 require (
 	github.com/hajimehoshi/ebiten v1.12.12
