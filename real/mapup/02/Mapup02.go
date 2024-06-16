@@ -1,6 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+	"log"
+	"sort"
+)
 
 var dirs = [][]int{
 	{-1, 0},
@@ -23,11 +28,22 @@ func (q *IntQueue[T]) Enqueue(slice T) {
 	q.size += 1
 }
 
-func (q *IntQueue[T]) Dequeue() T {
+func (q *IntQueue[T]) Dequeue() (T, error) {
+	if q.size == 0 {
+		var zeroValue T
+		return zeroValue, errors.New("Empty queue")
+	} else if q.size == 1 {
+		defer func() {
+			q.size = 0
+			q.queue = []T{}
+		}()
+		return q.queue[0], nil
+	}
 	defer func() {
+		q.size -= -1
 		q.queue = q.queue[1:]
 	}()
-	return q.queue[0]
+	return q.queue[0], nil
 }
 
 func main() {
@@ -42,7 +58,17 @@ func main() {
 	k1 := 2
 	ax1 := 1
 	ay1 := 2
+	testCase2 := [][]int{
+		{0, 0, 0, 1},
+		{0, 2, 0, 1},
+		{2, 0, 0, 1},
+		{0, 2, 0, 1},
+	}
+	k2 := 2
+	ax2 := 2
+	ay2 := 1
 	fmt.Println(solution(testCase1, k1, ax1, ay1))
+	fmt.Println(solution(testCase2, k2, ax2, ay2))
 }
 
 func solution(board [][]int, k, ax, ay int) int {
@@ -79,13 +105,43 @@ func solution(board [][]int, k, ax, ay int) int {
 	}
 
 	//BFS
+	var results []int
 	var queue IntQueue[[]int]
-	queue.Enqueue([]int{ay, ax, 0})
+	queue.Enqueue([]int{ax, ay, 0})
 	for !queue.IsEmpty() {
-		//내일하자~
+		//현재 위치 확인
+		current, err := queue.Dequeue()
+		if err != nil {
+			log.Fatal(err)
+		}
+		x := current[0]
+		y := current[1]
+		cnt := current[2]
+		//현재 위치가 폭탄 영향범위가 아니면 종료 및 list 추가
+		if !explosion[x][y] {
+			results = append(results, cnt)
+			break
+		}
+		//방향별로 bfs 시작
+		for _, dir := range dirs {
+			nx := x + dir[0]
+			ny := y + dir[1]
+			//이동 가능한 방향이면
+			if isValid(boardSize, nx, ny) && !isWall(board, nx, ny) && !isBomb(board, nx, ny) {
+				queue.Enqueue([]int{nx, ny, cnt + 1})
+			}
+		}
 	}
 
-	return 1
+	var result int
+	sort.Ints(results)
+
+	if len(results) == 0 {
+		result = -1
+	} else {
+		result = results[0]
+	}
+	return result
 }
 
 func isValid(boardSize, x, y int) bool {
@@ -97,5 +153,9 @@ func isWall(board [][]int, x, y int) bool {
 }
 
 func isBomb(board [][]int, x, y int) bool {
+	return board[x][y] == 1
+}
+
+func isDestination(board [][]int, x, y int) bool {
 	return board[x][y] == 1
 }
