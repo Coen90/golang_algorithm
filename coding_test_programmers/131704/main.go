@@ -9,7 +9,28 @@ func main() {
 	fmt.Println(solution(order2))
 }
 
+// 두번째 풀이
 func solution(order []int) int {
+	var result int
+	var idx int
+	s := &Stack{}
+	for i := 1; i <= len(order); i++ {
+		s.add(i)
+		for !s.isEmpty() {
+			if s.get() == order[idx] {
+				s.pop()
+				idx++
+				result++
+			} else {
+				break
+			}
+		}
+	}
+	return result
+}
+
+// 첫번째 풀이
+func solution1(order []int) int {
 	var result int
 	nextNum := 1
 	s := &Stack{}
